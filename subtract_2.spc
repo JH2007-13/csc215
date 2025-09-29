@@ -1,4 +1,4 @@
-# Add 2 16-bit numbers
+# Subtract 2 numbers
 # Written by Joshua Harris
 # CSC 215 : Computer Systems
 # 29 September 2025
