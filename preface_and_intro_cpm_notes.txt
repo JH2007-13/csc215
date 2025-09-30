@@ -1,1 +1,9 @@
+||| Preface |||
+Assembly is far more based in machine code than other languages of the time
+Each new computer is coded differently
+CP/M uses routines to simplify coding
+CP/M makes it easier to communicate with input/output devices and storage
+The guide will teach us how to make a library of subroutines, which will allow us to create more complex programs
+
+||| Introduction |||
 
