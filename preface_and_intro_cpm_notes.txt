@@ -6,4 +6,15 @@ CP/M makes it easier to communicate with input/output devices and storage
 The guide will teach us how to make a library of subroutines, which will allow us to create more complex programs
 
 ||| Introduction |||
+"cr" symbol is the equivelant of the return key on keyboard
+The first program is a debugging tool that displayed a "$" to the console - good for testing operation
+Assembly uses some of the same mnemonics as the basic Altair programming
+WCONF = Write-on-the-Console function
+ED.COM is assembled by ASM.COM
+The debugger (DDT) can be used for very short programs, but the assembler is used for anything longer
+Intro program is an example of interfacing with the input/output (I/0) devices
+Assembly language can reduce program size and therefore cost, and also run faster than higher-level programs
+Required items: CP/M based computer, complete CP/M system disk, and a clean disk for experimenting.
+
+
 
