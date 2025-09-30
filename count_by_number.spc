@@ -26,3 +26,5 @@ c2 # 0E   JNZ        Jumps to a specified spot in the code (Line 16) if the Zero
 00 # 15              Specified data value
 1a # 16   LDAX DE    Loads the next value into the accumulator to start incrementing
 c3 # 17   JMP        Jumps to a specified spot in the code (Line 16) and restarts the incrementation cycle for the next value
+==
+40:03
