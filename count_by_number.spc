@@ -22,6 +22,6 @@ c2 # 0E   JNZ        Jumps to a specified spot in the code (Line 16) if the Zero
 12 # 11   STAX DE    Stores the accumulator in the value specified by registers D and E (which is memory value 50)
 13 # 12   INX DE     Increments registers D and E, which moves them to the next spot in memory
 12 # 13   STAX DE    Stores the accumulator in the specified next spot in memory, which will be added to the counter
-0e # 14   MVI C,0    Resets register C to 0, restarting the counter
+0e # 14   MVI C,0    Resets register C to a specified data value (0), restarting the counter
 00 # 15              Specified data value
 c3 # 16   JMP        Jumps to a specified spot in the code (Line 16) and restarts the incrementation cycle for the next value
