@@ -3,6 +3,20 @@ You communicate to this computer with a terminal - will also be called a console
 Terminal is composed of a monitor (which is also a type of program) and a keyboard
 CP/M allows you to name programs and call programs by name
 A small microcomputer system usually consists of a console terminal, computer with CPU and memory, a floppy disk system, and a line printer
+Consoles started with a switches-and-lights system, but quickly evolved into teletype systems, such as the ASR-33
+Early storage systems consisted of paper punch machines
+A CPU (central processing unit) forms the basis of every computer, and it processes data from different parts of the computer
+The Intel 8080 microprocessor's instruction set became standard for future projects in the industry. This is why the 8085 the book talks about runs with the same instruction set
+The 8085 takes a 5-volt DC power source to use
+Microprocessors are a integrated circuit (IC)
+opcodes = operation codes
+Programs are formatted in bytes
+Small programs in read-only memory (ROM) allow you to automatically load a program without keying it in
+Read-Write Memory (RAM) is used to process changes to bit patterns
+A PROM (Programmable ROM) is an IC with no saved program, which you then hardcode a program into that cannot be removed
+EPROMs (Erasable PROM) allow you to erase a program once it has been burned into the PROM
+Process: a ROM with a loader program is stored in ROM, which reads the program into RAM, which then interacts with an I/O mass storage device
+8085 microprocessor can address 65536 bytes of memory (64 Kilobytes)
 
 
 
