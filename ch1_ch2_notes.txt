@@ -17,6 +17,12 @@ A PROM (Programmable ROM) is an IC with no saved program, which you then hardcod
 EPROMs (Erasable PROM) allow you to erase a program once it has been burned into the PROM
 Process: a ROM with a loader program is stored in ROM, which reads the program into RAM, which then interacts with an I/O mass storage device
 8085 microprocessor can address 65536 bytes of memory (64 Kilobytes)
+Main storage on this machine is two floppy disks with between 70k and several million bytes
+Data on floppy disks is broken into circular tracks, each with its own sector, which has an address
+Data in sectors is broken into a string of data bytes, with the standard CP/M having 128 bytes per sector
+CP/M takes care of most addressing tasks; all a programmer needs to know is the name of the file they want, and which drive it's on
+
+
 
 
 
