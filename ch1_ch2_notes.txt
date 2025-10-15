@@ -21,6 +21,14 @@ Main storage on this machine is two floppy disks with between 70k and several mi
 Data on floppy disks is broken into circular tracks, each with its own sector, which has an address
 Data in sectors is broken into a string of data bytes, with the standard CP/M having 128 bytes per sector
 CP/M takes care of most addressing tasks; all a programmer needs to know is the name of the file they want, and which drive it's on
+TTY and similar machines print one character at a time, while traditional line printers store large amounts of data on buffers before printing it all out at once
+CP/M assumes the use of a lower-level line printer
+The way data used to be transferred between devices was that a floppy disk would have to be transported to a different device
+CP/M also uses the names of these devices, like line printers, paper tape readers, and paper tape punchers
+Computers in the time of the guide also used modems (essentially computer telephones) to communicate with each other
+
+||| Chapter 2 |||
+
 
 
 
