@@ -28,6 +28,13 @@ CP/M also uses the names of these devices, like line printers, paper tape reader
 Computers in the time of the guide also used modems (essentially computer telephones) to communicate with each other
 
 ||| Chapter 2 |||
+Core memory retains its contents, even if the power is cut. However, if a programming error erases it, a new loader program has to be manually inputted through a switches and lights console
+For this reason, "bootstrap" loaders created to be extremely fast for this scenario - they would read in a better loader, which could then load in the main program
+RAM memory, which made the jump from magnetic cores to semiconductors, has memory erased even with slight fluctiations in power
+Companies started loading bootstraps onto ROMs, and more specifically EPROMs, which phased out switches and light consoles
+"Software" includes components wiped out by RAM loss, while "firmware" includes programs burned into the ROM which are more permanent
+When an 8080 microprocessor is reset, it jumps back to memory location zero for its first instruction
+Read-write memory is also located in the lower memory end, so both the CPU and RAM look to memory location zero for their next steps
 
 
 
