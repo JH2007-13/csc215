@@ -1,1 +1,17 @@
+||| Chapter 3 |||
+CRTs are CONs when set up properly
+Disk names match up with each other in the system (0=A:, 1=B:)
+There are four logical devices that CP/M uses
+CON logical device is the console
+Liner printers (LPT) are connected as LST (listing devices)
+RDR and PUN are general purpose input and output devices
+Each logical device can be connected to a variety of physical devices
+IOBYT is a one-byte memory location for switching between physical devices
+The CON is the only bi-directional logical device
+Some physical devices may need to be configured in more than one logical device
+
+||| Chapter 4 |||
+
+
+
 
