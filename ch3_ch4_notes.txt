@@ -13,7 +13,12 @@ Some physical devices may need to be configured in more than one logical device
 ||| Chapter 4 |||
 Each file name is up to 8 characters in length
 File names are appended by a .TYP in general form, although the period may not be shown if the file is examined using the DIR command
-.ASM is a 
+.ASM denotes an assembly language source program, while .COM denotes a command file which execute part of the file name following a "<"
+You can create your own file types as long as they don't interfere with other conventions
+CP/M can create and delete files from user code
+New file types can be used to as "labels" to designate groups of files
+The command DIR lists all files on the current disk, while DIR*.COM lists all .COM files
+THe "*" symbol acts as a placeholder for any file name
 
 
 
