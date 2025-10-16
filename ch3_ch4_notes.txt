@@ -11,6 +11,9 @@ The CON is the only bi-directional logical device
 Some physical devices may need to be configured in more than one logical device
 
 ||| Chapter 4 |||
+Each file name is up to 8 characters in length
+File names are appended by a .TYP in general form, although the period may not be shown if the file is examined using the DIR command
+.ASM is a 
 
 
 
