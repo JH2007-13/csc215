@@ -35,6 +35,29 @@ Companies started loading bootstraps onto ROMs, and more specifically EPROMs, wh
 "Software" includes components wiped out by RAM loss, while "firmware" includes programs burned into the ROM which are more permanent
 When an 8080 microprocessor is reset, it jumps back to memory location zero for its first instruction
 Read-write memory is also located in the lower memory end, so both the CPU and RAM look to memory location zero for their next steps
+The same signal that resets the CPU also activates a bootup circuit, which replaces memory location 0 with a "shadow PROM", removing RAM in the process
+The shadow PROM usually tells the computer to jump to the beginning of a monitor ROM program, located at the top of the main memory
+The shadow PROM command places the ROM's address on the address bus, and afterwards the computer is told to replace the shadow PROM with the RAM
+Although the address bus is a set of sixteen single lines (for bit patterns), the bootup program only needs the most significant bit
+Monitor programs communicate with the user through a console
+All the Monitor PROM does is read the bootstrap program from the disk, and runs the monitor if there is a disk error
+All the bootstrap does is read the CP/M program from the disk, and runs the monitor if there is an error
+The Dynamic Debugging Tool (DDT) allows you to initiate a mass program reset (you still need to flip the switch)
+Before communicating with an output device, a computer must check if the connection is ready to accept information
+Each computer has a different configuration for output ports, but CP/M can standardize it
+In CP/M, function codes are passed in one register, while data and buffer addresses are passed in a different register
+You can still use hardware-specific data addresses while coding, but that will mean your program is not portable
+CP/M takes up 6k of old disk space
+User programs in RAM are run in the TPA (transient program area)
+User programs are called application programs, which will be changed using CP/M's editor (ED), assembler (ASM), loader (LOAD), and debugger (DDT), all of which also have to be loaded into the TPA
+Only DDT will share main memory with the application programs, while CP/M's tools have to be loaded individually into the TPA
+Vectors (at the lowest addresses in the RAM) store unconditional jump instructions, which the 8080 uses to store memory locations for hardware interrupts
+In a CP/M operating system, RAM is composed of the monitor RAM, operating system, TPA, and there are several bytes for vectors and buffers (only 64 bytes for vectors)
+The rest of the memory is composed of a very small monitor PROM and then unused address space
+Monitor programs are very variable; some don't even need to exist, while others take up lots of space
+
+
+
 
 
 
