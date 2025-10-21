@@ -18,8 +18,15 @@ You can create your own file types as long as they don't interfere with other co
 CP/M can create and delete files from user code
 New file types can be used to as "labels" to designate groups of files
 The command DIR lists all files on the current disk, while DIR*.COM lists all .COM files
+A carriage return is assumed after each command
 THe "*" symbol acts as a placeholder for any file name
-
-
-
-
+The "?" symbol can also be used, where the number of symbols indicates the greatest number of characters in the file name
+*.* will locate any file with any type in the specified directory
+PIP is the peripheral exchange program
+DIR L*.ASM and DIR LIFE????.ASM will both locate the file named Life-1.ASM
+PIP B:=A:*.* will copy all files from disk drive A into disk drive B
+PIP PUN:=FILENAME.TYP will send the specified file name to the physical device attached to the PUN logical device
+In CP/M's command line, you can back one character with the delete/backspace key
+If the CP/M version does not allow backing up, the character to be deleted will be repeated
+Entering CTRL+R will repeat the line with the correct edits to the next line
+CTRL+U or CTRL+X will abort the current line
