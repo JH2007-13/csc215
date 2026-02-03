@@ -1,0 +1,219 @@
+; SCRABBLE SCORE CALCULATOR
+; CSC215: COMPUTER SYSTEMS
+; 25 NOVEMBER 2025
+; ASCII CHARACTERS
+CR      EQU     0DH     ; CARRIAGE RETURN
+LF      EQU     0AH     ; LINE FEED
+CTRLZ   EQU     1AH     ; OPERATOR INTERRUPT
+; CP/M BDOS FUNCTIONS
+WCONF   EQU     2       ; WRITE (A) TO CON:
+RBUFF   EQU     10      ; READ A CONSOLE LINE
+; CP/M ADDRESSES
+RBOOT   EQU     0
+BDOS    EQU     5       ; SYSTEM CALL ENTRY
+TPA     EQU     100H    ; TRANSIENT PROGRAM AREA
+        ORG     TPA     ; ASSEMBLE PROGRAM FOR TPA
+START:  LXI     SP,STAK ; SET UP USER'S STACK
+START1: CALL    CCRLF   ; START1 IS THE SAME AS CPMIO
+        CALL    SPMSG
+        DB      'ENTER A WORD',CR,LF,0
+        JMP     START2
+START2: CALL    CIMSG   ; START2 STARTS THE SAME UNTIL IT GETS TO SCORE
+        CALL    CCRLF
+        MVI     C,0
+        LXI     H,INBUF+2
+        CALL    SCORE   ; SCORE IS CALLED AFTER INITIALIZING THE COUNTER AND TAKING INPUT
+        MOV     A,C     ; CHECK IF INPUT IS INVALID (# SYMBOL IMPLIES INVALID)
+        CPI     '#'
+        JZ      START4
+        CALL    SPMSG
+        DB      'THIS WORD SCORES: ',CR,LF,0
+        CALL    PRINT
+        CALL    CCRLF
+        JMP     START3
+START3: CALL    SPMSG   ; RESTART SEQUENCE
+        DB      'CONTINUE?',CR,LF,0
+        CALL    GETYN
+        JZ      START2
+        MVI     C,0
+        CALL    BDOS
+START4: CALL    SPMSG   ; INFORMS THE USER OF INVALID RESPONSE AND JUMPS TO RESTART SEQUENCE
+        DB      'INVALID INPUT',CR,LF,0
+        JMP     START3
+; CHARACTER IN REGISTER A OUTPUT TO CONSOLE
+CO:     PUSH    B       ; SAVE REGISTERS
+        PUSH    D
+        PUSH    H
+        MVI     C,WCONF ; SELECT FUNCTION
+        MOV     E,A     ; CHARACTER TO E
+        CALL    BDOS    ; OUTPUT BY CP/M
+        POP     H       ; RESTORE REGISTERS
+        POP     D
+        POP     B
+        RET
+; CARRIAGE RETURN, LINE FEED TO CONSOLE
+CCRLF:  MVI     A,CR
+        CALL    CO
+        MVI     A,LF
+        JMP     CO
+; MESSAGE POINTED TO BY HL OUT TO CONSOLE
+COMSG:  MOV     A,M     ; GET A CHARACTER
+        ORA     A       ; ZERO IS THE TERMINATOR
+        RZ              ; RETURN ON ZERO
+        CALL    CO      ; ELSE OUTPUT THE CHARACTER
+        INX     H       ; POINT TO THE NEXT ONE
+        JMP     COMSG   ; AND CONTINUE
+; INPUT CONSOLE MESSAGE INTO BUFFER
+CIMSG:  PUSH    B       ; SAVE REGISTERS
+        PUSH    D
+        PUSH    H
+        LXI     H,INBUF+1       ; ZERO CHARACTER COUNTER
+        MVI     M,0
+        DCX     H       ; SET MAXIMUM LINE LENGTH
+        MVI     M,80
+        XCHG            ; INBUF POINTER TO DE DEGISTERS
+        MVI     C,RBUFF ; SET UP PEAD BUFFER FUNCTION
+        CALL    BDOS    ; INPUT A LINE
+        LXI     H,INBUF+1       ; GET CHARACTER COUNTER
+        MOV     E,M     ; INTO LSB OF DE REGISTER PAIR
+        MVI     D,0     ; ZERO MSB
+        DAD     D       ; ADD LENGTH TO START
+        INX     H       ; PLUS ONE POINTS TO END
+        MVI     M,0     ; INSERT TERMINATOR AT END
+        POP     H       ; RESTORE ALL REGISTERS
+        POP     D
+        POP     B
+        RET
+; MESSAGE POINTED TO BY STACK OUT TO CONSOLE
+SPMSG:  XTHL            ; GET "RETURN ADDRESS" TO HL
+        XRA     A       ; CLEAR FLAGS AND ACCUMALATOR
+        ADD     M       ; GET ONE MESSAGE CHARACTER
+        INX     H       ; POINT TO NEXT
+        XTHL            ; RESTORE STACK FOR
+        RZ              ; RETURN IF DONE
+        CALL    CO      ; ELSE DISPLAY CHARACTER
+        JMP     SPMSG   ; AND DO ANOTHER
+; GET A YES OR NO FROM CONSOLE
+GETYN:  CALL    SPMSG   ; PROMPT FOR INPUT
+        DB      ' (Y/N)?: ',0
+        CALL    CIMSG
+        CALL    CCRLF
+        LDA     INBUF+2 ; FIRST CHARACTER ONLY
+        ANI     01011111B       ; FORCE UPPERCASE
+        CPI     'Y'     ; RETURN WITH A ZERO = YES
+        RZ
+        CPI     'N'     ; NON-ZERO = NO
+        JNZ     GETYN   ; ELSE TRY AGAIN
+        CPI     0       ; RESET ZERO FLAG
+        RET             ; AND ALL DONE
+SCORE:  MOV     A,M     ; FIRST INPUT BUFFER CHARACTER
+        ORA     A               ; CHECKING IF 0
+        RZ
+        ANI     01011111B       ; FORCING UPPERCASE
+        MOV     B,A     ; STORING TARGET CHARACTER
+        XCHG            ; INPUT BUFFER ADDRESS IS STORED IN DE
+        LXI     H,ONEPOINT      ; LOADING BUFFER WITH CHARACTERS THAT SCORE ONE POINT IN PREPARATION FOR PONE
+        JMP     PONE    ; MOVES TO ONE-POINT LETTER CHECKER
+PONE:   CALL    ZEROCHK ; CHECKS IF POINT BUFFER CHARACTER IS 0
+        JZ      PTWOSET ; IF YES, MOVE TO NEXT VALUE (NONE OF THE FIRST BUFFER'S CHARACTERS MATCHED UP)
+        CALL    COMPARE ; IF NO, COMPARE THE THE CHARACTERS FROM BOTH BUFFERS
+        JNZ     PONE    ; IF NOT EQUAL, PONE STARTS AGAIN
+        INR     C       ; IF EQUAL, COUNTER IS INCREASED BY 1
+        JMP     PEND
+PTWOSET:        LXI     H,TWOPOINTS     ; MOVING ONTO THE SECOND BUFFER IN PREPARATION FOR PTWO
+        JMP     PTWO
+PTWO:   CALL    ZEROCHK
+        JZ      PTHREESET
+        CALL    COMPARE
+        JNZ     PTWO
+        MOV     A,C
+        ADI     2
+        MOV     C,A
+        JMP     PEND
+PTHREESET:      LXI     H,THREEPOINTS
+        JMP     PTHREE
+PTHREE: CALL    ZEROCHK
+        JZ      PFOURSET
+        CALL    COMPARE
+        JNZ     PTHREE
+        MOV     A,C
+        ADI     3
+        MOV     C,A
+        JMP     PEND
+PFOURSET:       LXI     H,FOURPOINTS
+        JMP     PFOUR
+PFOUR:  CALL    ZEROCHK
+        JZ      PFIVE
+        CALL    COMPARE
+        JNZ     PFOUR
+        MOV     A,C
+        ADI     4
+        MOV     C,A
+        JMP     PEND
+PFIVE:  MOV     A,B
+        CPI     'K'
+        JNZ     PEIGHTSET
+        MOV     A,C
+        ADI     5
+        MOV     C,A
+        JMP     PEND
+PEIGHTSET:      LXI     H,EIGHTPOINTS
+        JMP     PEIGHT
+PEIGHT: CALL    ZEROCHK
+        JZ      PTENSET
+        CALL    COMPARE
+        JNZ     PEIGHT
+        MOV     A,C
+        ADI     8
+        MOV     C,A
+        JMP     PEND
+PTENSET:        LXI     H,TENPOINTS
+        JMP     PTEN
+PTEN:   CALL    ZEROCHK
+        JZ      PEXTRA
+        CALL    COMPARE
+        JNZ     PTEN
+        MOV     A,C
+        ADI     10
+        MOV     C,A
+        JMP     PEND
+PEXTRA: MVI     C,'#'   ; CHANGES THE COUNTER TO A SYMBOL IF NO ALPHABET CHARACTERS MATCH
+        RET     ; IMMEDIATELY TERMINATES SCORE
+PEND:   XCHG
+        INX     H
+        JMP     SCORE
+ZEROCHK:        MOV     A,M     ; SUBROUTINE TO MINIMIZE REPETITION (CHECKS IF TARGETED CHARACTER IS ZERO)
+        ORA     A
+        RET
+COMPARE:        MOV     A,B     ; ALSO A REPETITION MINIMIZING SUBROUTINE (COMPARES CHARACTERS FROM BOTH BUFFERS AND INCREMENTS LETTER-POIINT 
+        CMP     M
+        INX     H
+        RET
+PRINT:  MOV     A,C     ; INITIALIZES VARIABLES (C IS SCORE, B IS COUNTER)
+        MVI     B,0
+        JMP     DIVIDE
+DIVIDE: CPI     10      ; DIVIDES NUMBER UNTIL ONLY ONES PLACE REMAINS
+        JC      CHBUFF
+        SUI     10
+        INR     B
+        JMP     DIVIDE
+CHBUFF: MOV     C,A     ; PRINTS TENS AND ONES PLACE IN THE CORRECT ORDER USING CO
+        MVI     D,'0'
+        MOV     A,B
+        ADD     D
+        CALL    CO
+        MOV     A,C
+        ADD     D
+        CALL    CO
+        RET
+ONEPOINT:       DB      'EAIONRTLSU',0
+TWOPOINTS:      DB      'DG',0
+THREEPOINTS:    DB      'BCMP',0
+FOURPOINTS:     DB      'FHVWY',0
+EIGHTPOINTS:    DB      'JX',0
+TENPOINTS:      DB      'QZ',0
+INBUF:  DS      83      ; LINE INPUT BUFFER
+; SET UP STACK SPACE
+        DS      64      ; 40H LOCATIONS
+STAK:   DB      0       ; TOP OF STACK
+        END
