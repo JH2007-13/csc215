@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+int atoi(char s[])
+{
+    int i, n;
+    
+    n = 0;
+    for (i = 0; s[i] >= '0' && s[i] <= '9'; ++i)
+        n = 10 * n + (s[i] - '0');
+    return (n);
+}
+
+int main (argc, argv)
+int argc;
+char **argv;
+{
+    int i;
+    int sum = 0;
+    int validityTrigger = 0;
+
+    printf("Command line argument test\n");
+
+    for (i = 1; i < argc; i++) {
+        
+        if (atoi(argv[i]) == 0 && argv[i][0] != '0'){
+            printf("%s is not a number\n",argv[i]);
+            validityTrigger=1;
+            break;
+        }
+        sum+=atoi(argv[i]);
+    }
+    if (validityTrigger == 0)
+    printf("The sum is %d",sum);
+}
