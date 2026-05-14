@@ -10,3 +10,7 @@ Visually, the array would move like this:
 2. [3, 4, 1, 2, 5, 7, 8, 9] (1st, 2nd, 4th values get swapped, etc.)
 3. [1, 2, 3, 4, 5, 7, 8, 9] (No more swaps occur but the gap is still greater than one, so the loop continues)
 4. [1, 2, 3, 4, 5, 7, 8, 9] (Gap finally reaches one, so the program ends)
+
+### Shell Sort Problems
+---
+
