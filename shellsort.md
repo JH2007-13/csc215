@@ -22,4 +22,4 @@ Let's visually represent each iteration of the code
 5. [9, 12, 33, 25, 49, 56, 77, 81] (Loop finishes)
 
 *8. Write a program to sort an array of integers in descending order*
-Since my program was already written in descending order, I'm going to treat this problem like it's asking me to write a shell sort in ascending order. To do that, you simply have to switch the order of the line 
+Since my program was already written in descending order, I'm going to treat this problem like it's asking me to write a shell sort in ascending order. To do that, you simply have to switch the order of the line `swap(&arr[i+gap],&arr[i]);`, which moves the highest value to the left instead of the right. This ensures the array is sorted in ascending order.
