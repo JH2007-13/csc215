@@ -4,4 +4,4 @@ A shell sort is very similar to an insertion sort, except it uses an algorithm s
 
 ### Shell Sort Example
 ---
-Say you had the unordered list [9, 5, 1, 8, 4, 7, 2, 3]. The first thing the program does is split the length of the array in two using `
+Say you had the unordered list [9, 5, 1, 8, 4, 7, 2, 3]. The first thing the program does is split the length of the array in two using `gap = gap/2`, which will act as the first distance between swaps. 
