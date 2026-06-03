@@ -20,7 +20,7 @@ int n;
   int i, flag, gap, cycles;
   flag = 1;
   gap = n+1;
-  cycles = 0
+  cycles = 0;
   while (flag == 1 || gap > 1) /*Ensures that even if the gap is 1, the sort continues until fully sorted*/
   {
     cycles += 1;
