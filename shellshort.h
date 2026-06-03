@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-swap_int(a, b)
+swap(a, b)
 int *a;
 int *b;
 {
