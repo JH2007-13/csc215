@@ -1,5 +1,15 @@
 #include <stdio.h>
 
+swap_int(a, b)
+int *a;
+int *b;
+{
+  int temp;
+  temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
 shell_sort(arr, n)
 int arr[];
 int n;
