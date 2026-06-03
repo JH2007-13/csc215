@@ -50,5 +50,5 @@ main()
   for (i = 0; i < 16; i++) {
     printf("%d, ", a[i]);
   }
-  printf("Cycle count: %d", j);
+  printf("Cycle count: %d\n", j);
 }
