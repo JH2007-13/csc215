@@ -13,17 +13,17 @@ int *b;
   *b = temp;
 }
 
-shell_sort(arr, n)
+int shell_sort(arr, n)
 int arr[];
 int n;
 {
-  int i;
-  int flag;
-  int gap;
+  int i, flag, gap, cycles;
   flag = 1;
   gap = n+1;
+  cycles = 0
   while (flag == 1 || gap > 1) /*Ensures that even if the gap is 1, the sort continues until fully sorted*/
   {
+    cycles += 1;
     flag = 0;
     gap = gap/2; /*Gap starts at half the length of the array, and halves itself again each cycle*/
     for (i = 0; i < n-gap; i++) /*Halts each sorting cycle before it goes over the edge of the array*/
@@ -35,15 +35,20 @@ int n;
       }
     }
   }
+  return cycles;
 }
 
 main()
 {
   int a[16];
-  int i;
+  int i, j;
+  printf("Using shell sort on a 16 integer array\n");
+  printf("Before sorting: 31, 4, 15, 9, 26, 5, 35, 8, 97, 23, 84, 62, 64, 38, 35, 27\n");
   initw(a, "31, 4, 15, 9, 26, 5, 35, 8, 97, 23, 84, 62, 64, 38, 35, 27");
-  shell_sort(a, 16);
+  printf("After sorting: ");
+  j = shell_sort(a, 16);
   for (i = 0; i < 16; i++) {
-    printf("%d\n", a[i]);
+    printf("%d, ", a[i]);
   }
+  printf("Cycle count: %d", j);
 }
