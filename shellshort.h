@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+int swap();
+int shell_sort();
+
 swap(a, b)
 int *a;
 int *b;
@@ -15,9 +18,9 @@ int arr[];
 int n;
 {
   int i;
-  flag;
-  gap;
-  flag = 1
+  int flag;
+  int gap;
+  flag = 1;
   gap = n+1;
   while (flag == 1 || gap > 1) /*Ensures that even if the gap is 1, the sort continues until fully sorted*/
   {
