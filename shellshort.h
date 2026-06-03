@@ -17,24 +17,23 @@ int shell_sort(arr, n)
 int arr[];
 int n;
 {
-  int i, flag, gap, cycles;
-  flag = 1;
-  gap = n+1;
+  int i, j, temp, cycles, gap;
   cycles = 0;
-  while (flag == 1 || gap > 1) /*Ensures that even if the gap is 1, the sort continues until fully sorted*/
+  for (gap = n / 2; gap > 0; gap = gap / 2)
   {
     cycles += 1;
-    flag = 0;
-    gap = gap/2; /*Gap starts at half the length of the array, and halves itself again each cycle*/
-    for (i = 0; i < n-gap; i++) /*Halts each sorting cycle before it goes over the edge of the array*/
+    for (i = gap; i < n; i++)
     {
-      if (arr[i+gap] < arr[i]) /*If the second value is smaller than the first value...*/
+      temp = arr[i];
+      j = i;
+      while (j >= gap && arr[j - gap] > temp)
       {
-        swap(&arr[i+gap],&arr[i]); /*Both values are swapped*/
-        flag = 1; /*Everytime a swap happens, the flag is triggered to ensure the program runs again*/
+        arr[j] = arr[j - gap];
+        j = j - gap;
       }
+      arr[j] = temp;
     }
-  }
+  }   
   return cycles;
 }
 
